@@ -1,4 +1,4 @@
-package tar.calion.aoc.year2015;
+package tar.calion.aoc.year2015.day9;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Collection;
 import org.apache.commons.collections4.iterators.PermutationIterator;
+import tar.calion.aoc.year2015.day9.Routes;
 
 public class Day9 {
 
@@ -20,20 +21,23 @@ public class Day9 {
     public Day9(String routesInput) {
         distances = new HashMap<>();
         locations = new HashSet<>();
+        parseRoutesInput(routesInput);
+    }
 
+    private void parseRoutesInput(String routesInput) {
         if (routesInput == null || routesInput.trim().isEmpty()) {
-            return; 
+            return;
         }
 
         Pattern pattern = Pattern.compile("(\\w+) to (\\w+) = (\\d+)");
-        String[] lines = routesInput.split("\\n"); 
+        String[] lines = routesInput.split("\\n");
 
         for (String line : lines) {
             Matcher matcher = pattern.matcher(line.trim());
             if (matcher.matches()) {
                 String loc1 = matcher.group(1);
                 String loc2 = matcher.group(2);
-                int distanceValue = Integer.parseInt(matcher.group(3)); 
+                int distanceValue = Integer.parseInt(matcher.group(3));
 
                 locations.add(loc1);
                 locations.add(loc2);
@@ -45,18 +49,18 @@ public class Day9 {
         }
     }
 
-    public Route calculateShortestRoute() {
+    public Routes calculateRoutes() {
         List<String> shortestRouteWaypoints = null;
         long minDistance = Long.MAX_VALUE;
 
         // Short-circuit if there are no locations to process.
         if (locations.isEmpty()) {
-            return new Route(Collections.emptyList(), 0);
+            return new Routes(new Route(Collections.emptyList(), 0));
         }
 
         // Handle the single location case.
         if (locations.size() == 1) {
-            return new Route(new ArrayList<>(locations), 0);
+            return new Routes(new Route(new ArrayList<>(locations), 0));
         }
         
         Collection<String> locationCollection = new ArrayList<>(locations);
@@ -87,9 +91,9 @@ public class Day9 {
         if (shortestRouteWaypoints == null) {
             // No valid route covering all locations was found (e.g., disconnected graph for all-city traversal,
             // or no locations provided initially).
-            return new Route(Collections.emptyList(), 0); 
+            return new Routes(new Route(Collections.emptyList(), 0));
         }
         
-        return new Route(shortestRouteWaypoints, minDistance);
+        return new Routes(new Route(shortestRouteWaypoints, minDistance));
     }
 }

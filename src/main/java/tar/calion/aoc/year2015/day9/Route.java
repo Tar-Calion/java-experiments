@@ -1,4 +1,4 @@
-package tar.calion.aoc.year2015;
+package tar.calion.aoc.year2015.day9;
 
 import java.util.List;
 
