@@ -53,6 +53,11 @@ public class Day9 {
         if (locations.isEmpty()) {
             return new Route(Collections.emptyList(), 0);
         }
+
+        // Handle the single location case.
+        if (locations.size() == 1) {
+            return new Route(new ArrayList<>(locations), 0);
+        }
         
         Collection<String> locationCollection = new ArrayList<>(locations);
         PermutationIterator<String> permIter = new PermutationIterator<>(locationCollection);
@@ -69,16 +74,10 @@ public class Day9 {
                 }
 
                 // This block is reached if all segments in the permutation exist.
-                // Handles all valid paths, including single-location paths (distance 0).
-                if (currentPermutation.size() >= 1) { 
-                    if (currentTotalDistance < minDistance) {
-                        minDistance = currentTotalDistance;
-                        shortestRouteWaypoints = new ArrayList<>(currentPermutation);
-                    } else if (currentPermutation.size() == 1 && minDistance == Long.MAX_VALUE) { 
-                        // Ensures a single location is correctly processed if no other paths are found.
-                        minDistance = 0;
-                        shortestRouteWaypoints = new ArrayList<>(currentPermutation);
-                    }
+                // Permutations will only be for 2 or more locations due to guard clauses.
+                if (currentTotalDistance < minDistance) {
+                    minDistance = currentTotalDistance;
+                    shortestRouteWaypoints = new ArrayList<>(currentPermutation);
                 }
             } catch (NullPointerException e) {
                 // This permutation is invalid because a path segment is missing; ignore it.
