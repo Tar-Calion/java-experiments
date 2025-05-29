@@ -1,5 +1,8 @@
-package tar.calion.aoc.year2015;
+package tar.calion.aoc.year2015.day9;
 
+import tar.calion.aoc.year2015.day9.Day9;
+import tar.calion.aoc.year2015.day9.Route;
+import tar.calion.aoc.year2015.day9.Routes;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Arrays;
@@ -17,7 +20,8 @@ class Day9Test {
                 Dublin to Belfast = 141
                 """;
         Day9 day9 = new Day9(routesInput);
-        Route shortestRoute = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route shortestRoute = result.shortestRoute();
 
         assertNotNull(shortestRoute, "Shortest route should not be null");
         assertNotNull(shortestRoute.waypoints(), "Waypoints list should not be null");
@@ -34,7 +38,8 @@ class Day9Test {
     @Test
     void testEmptyInputString() {
         Day9 day9 = new Day9("");
-        Route route = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route route = result.shortestRoute();
         assertNotNull(route, "Route should not be null for empty input");
         assertTrue(route.waypoints().isEmpty(), "Waypoints should be empty for empty input");
         assertEquals(0L, route.distance(), "Distance should be 0 for empty input");
@@ -43,7 +48,8 @@ class Day9Test {
     @Test
     void testNullInputString() {
         Day9 day9 = new Day9(null);
-        Route route = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route route = result.shortestRoute();
         assertNotNull(route, "Route should not be null for null input");
         assertTrue(route.waypoints().isEmpty(), "Waypoints should be empty for null input");
         assertEquals(0L, route.distance(), "Distance should be 0 for null input");
@@ -52,7 +58,8 @@ class Day9Test {
     @Test
     void testOneLocation() {
         Day9 day9 = new Day9("Alpha to Alpha = 0");
-        Route route = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route route = result.shortestRoute();
         assertNotNull(route, "Route should not be null for one location");
         assertEquals(1, route.waypoints().size(), "Should have one waypoint");
         assertEquals("Alpha", route.waypoints().get(0), "Waypoint should be Alpha");
@@ -62,7 +69,8 @@ class Day9Test {
     @Test
     void testTwoLocationsSingleRoute() {
         Day9 day9 = new Day9("Alpha to Beta = 100");
-        Route route = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route route = result.shortestRoute();
         assertNotNull(route, "Route should not be null");
         assertEquals(2, route.waypoints().size(), "Should have two waypoints");
         assertEquals(100L, route.distance(), "Distance should be 100");
@@ -80,7 +88,8 @@ class Day9Test {
                 Gamma to Delta = 200
                 """;
         Day9 day9 = new Day9(routesInput);
-        Route route = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route route = result.shortestRoute();
         assertNotNull(route, "Route should not be null");
         assertTrue(route.waypoints().isEmpty(), "Waypoints should be empty for disconnected graph not allowing full traversal");
         assertEquals(0L, route.distance(), "Distance should be 0 for no valid full route");
@@ -93,7 +102,8 @@ class Day9Test {
                 London to Paris = 200
                 """;
         Day9 day9 = new Day9(routesInput);
-        Route shortestRoute = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route shortestRoute = result.shortestRoute();
         
         assertNotNull(shortestRoute, "Shortest route should not be null for this connected case.");
         assertEquals(300L, shortestRoute.distance(), "Distance should be 300 for Dublin-London-Paris.");
@@ -140,7 +150,8 @@ class Day9Test {
                 Straylight to Arbre = 127
                 """;
         Day9 day9 = new Day9(routesInput);
-        Route shortestRoute = day9.calculateShortestRoute();
+        Routes result = day9.calculateRoutes();
+        Route shortestRoute = result.shortestRoute();
 
         assertNotNull(shortestRoute, "Shortest route should not be null for complex graph");
         assertEquals(251L, shortestRoute.distance(), "Distance for complex graph");
